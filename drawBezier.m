@@ -2,6 +2,7 @@ function bezi = drawBezier
 bezi = bezier;
 prompt = '>>>';
 plot(0,0);
+setFig();
 while(1)
     argv = strsplit(input(prompt,'s'));
     argc = size(argv);
@@ -83,10 +84,21 @@ while(1)
                 disp('Too few value(need 3 numbers)');
             end
             
+        elseif strcmp(command,'calcResolution')
+            if argc >= 2
+                numbers = str2double(argv);
+                bezi = bezi.calcResolution(numbers(1));
+                disp(strcat('resolution : ',num2str(bezi.tResolution)));
+                disp(strcat('number of points : ',num2str(bezi.numberPoints)));
+                disp(strcat('root distance : ',num2str(bezi.rootLength)));
+            else
+                disp('Too few value(need 2 numbers)');
+            end
+            
         elseif strcmp(command,'load')
             if argc >= 2
                 beziBuf = importdata(cell2mat(argv(1)));
-                bezi.point = beziBuf.point;
+                bezi = beziBuf;
             end
             
         elseif strcmp(command,'save')
